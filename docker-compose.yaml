@@ -1,0 +1,25 @@
+version: '3.9'
+name: 'mission_planner'
+
+services:
+  mission_planner:
+    build:
+      context: .
+      args:
+        - BASE_IMG=ubuntu:20.04
+    image: mission_planner
+    container_name: mission_planner
+    command: ["/bin/bash", "-ci", "mono MissionPlanner.exe"]
+    ipc: host
+    stdin_open: true
+    tty: true
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY
+      - XAUTORITY
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /dev:/dev
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
